@@ -1,0 +1,14 @@
+// 颜色
+$color-white: #F3F4F6;
+$color-gray: #9CA3AF;
+$color-gray-light: #374151;
+$color-black: #111827;
+$color-red: #EF4444;
+$color-purple: #A78BFA;
+
+// 内容居中
+.my-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
