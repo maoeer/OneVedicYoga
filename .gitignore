@@ -1,0 +1,75 @@
+# ---- Dependencies (Node) ----
+node_modules/
+
+# ---- Build outputs / caches ----
+dist/
+dist-ssr/
+build/
+out/
+coverage/
+.cache/
+.temp/
+tmp/
+temp/
+.vite/
+.turbo/
+
+# ---- Logs ----
+logs/
+log/
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Environment files ----
+.env
+.env.*
+!.env.example
+.env.local
+.envrc
+.envrc.local
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.iml
+.vs/
+
+# ---- TypeScript ----
+*.tsbuildinfo
+
+# ---- Lint / Tool caches ----
+.eslintcache
+.stylelintcache
+
+# ---- Sass ----
+.sass-cache/
+
+# ---- Python (generic backend ignores) ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+.pyre/
+.pytype/
+
+# ---- Git ----
+.git-credentials
+
+
