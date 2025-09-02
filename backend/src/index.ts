@@ -1,7 +1,7 @@
-import { config } from './config/index'
+import { config } from './config'
 import express, { Express } from "express"
 import cors from 'cors'
-import apiRouter from './routes'
+import routes from './routes'
 
 
 // 创建 Express 应用
@@ -12,8 +12,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// 路由：统一基础路径 /api
-app.use(config.apiBaseUrl, apiRouter)
+// 路由
+app.use(config.apiBaseUrl, routes)
 
 // 启动服务器
 app.listen(config.port, () => {
