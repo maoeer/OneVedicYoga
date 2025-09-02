@@ -1,11 +1,17 @@
 import { Router } from 'express'
+import userRouter from './user'
 
-const router = Router()
 
-router.get('/', (req, resp) => {
+const apiRouter = Router()
+
+// 健康检查
+apiRouter.get('/', (req, resp) => {
   resp.json({
     message: 'test success!'
   })
 })
 
-export default router
+// 业务路由聚合：/api/user
+apiRouter.use('/user', userRouter)
+
+export default apiRouter
