@@ -1,5 +1,12 @@
+<!-- 
+  todo:
+  1. 背景颜色和边框颜色
+  2. 错误信息使用隐藏不是直接删除
+-->
+
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import type { StyleValue, CSSProperties } from 'vue'
 import debounce from '@/utils/debounce';
 
 const props = withDefaults(defineProps<{
@@ -11,12 +18,14 @@ const props = withDefaults(defineProps<{
   maxLength?: number
   placeholder?: string
   validator?: (value: string) => boolean
+  style?: StyleValue
 }>(), {
   modelValue: '',
   type: 'text',
   minLength: 8,
   maxLength: 20,
-  placeholder: ''
+  placeholder: '',
+  style: () => ({} as CSSProperties)
 })
 
 const emit = defineEmits<{
@@ -59,14 +68,14 @@ const handleInput = (e: Event): void => {
 }
 
 // 失去焦点事件
-const handleBlur = () => isErrorPending.value = true
+const handleBlur = (): void => { isErrorPending.value = true }
 </script>
 
 <template>
   <div class="box-input">
     <label v-if="label">{{ label }}</label>
     <input :value="modelValue" :type="type" :placeholder="placeholder" :maxlength="maxLength" :minlength="minLength"
-      @input="handleInput" @blur="handleBlur">
+      :style="style" @input="handleInput" @blur="handleBlur">
     <small v-if="shouldShowError">{{ errorMessage }}</small>
   </div>
 </template>

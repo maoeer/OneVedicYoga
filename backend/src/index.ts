@@ -3,7 +3,6 @@ import express, { Express } from "express"
 import cors from 'cors'
 import routes from './routes'
 
-
 // 创建 Express 应用
 const app: Express = express()
 

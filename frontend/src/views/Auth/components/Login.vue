@@ -63,12 +63,17 @@ const formSubmit = () => {
 <style scoped lang="scss">
 $color-disabled: #D9CDF8;
 $color-hover: #9376E0;
+$color-purple: #A78BFA;
 
 .box-login {
   width: 350px;
   padding: 2rem;
   border-radius: 0.75rem;
-  background-color: $color-black;
+  background: rgba(255, 255, 255, 0.6); 
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: $radius;
+
 
   .title {
     font-weight: 700;
