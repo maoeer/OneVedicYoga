@@ -88,16 +88,23 @@ const handleBlur = (): void => { isErrorPending.value = true }
     display: block;
   }
 
-  label {
-    color: $color-gray;
-  }
-
   input {
     width: 100%;
     padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0.375rem;
     margin: 0.25rem 0;
     outline: none;
+    color: $color-black;
+    background-color: $color-white;
+
+    &::placeholder {
+      opacity: 0.5;
+    }
+
+    &:hover {
+      background-color: $color-gray-white;
+    }
   }
 
   small {

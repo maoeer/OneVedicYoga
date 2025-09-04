@@ -73,20 +73,13 @@ $color-purple: #A78BFA;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-radius: $radius;
-
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
   .title {
     font-weight: 700;
     line-height: 2rem;
     font-size: 1.5rem;
     text-align: center;
-    color: $color-black;
-  }
-
-   :deep(.input) {
-    border: 1px solid $color-gray-white;
-    background-color: $color-gray-white;
-    color: $color-black;
   }
 
   .submit-button {
@@ -100,12 +93,12 @@ $color-purple: #A78BFA;
     border: none;
     outline: none;
     background-color: $color-purple;
-    color: $color-black;
+    color: $color-white;
     cursor: pointer;
 
     &:disabled {
       background-color: $color-disabled;
-      color: rgba($color-black, 0.5);
+      color: rgba($color-black, 0.9);
       cursor: not-allowed;
       opacity: 0.85;
 
@@ -124,11 +117,10 @@ $color-purple: #A78BFA;
     justify-content: space-between;
     margin: 0.5rem 0;
     font-size: 0.75rem;
-    color: $color-gray;
   }
 
   a {
-    // color: $color-gray-white;
+      color: $color-blue;
   }
 }
 </style>
