@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { StyleValue, CSSProperties } from 'vue'
 import debounce from '@/utils/debounce';
 
 const props = withDefaults(defineProps<{
@@ -17,15 +16,15 @@ const props = withDefaults(defineProps<{
   minLength?: number
   maxLength?: number
   placeholder?: string
+  customClass?: string[]
   validator?: (value: string) => boolean
-  style?: StyleValue
 }>(), {
   modelValue: '',
   type: 'text',
   minLength: 8,
   maxLength: 20,
   placeholder: '',
-  style: () => ({} as CSSProperties)
+  customClass: () => []
 })
 
 const emit = defineEmits<{
@@ -75,8 +74,8 @@ const handleBlur = (): void => { isErrorPending.value = true }
   <div class="box-input">
     <label v-if="label">{{ label }}</label>
     <input :value="modelValue" :type="type" :placeholder="placeholder" :maxlength="maxLength" :minlength="minLength"
-      :style="style" @input="handleInput" @blur="handleBlur">
-    <small v-if="shouldShowError">{{ errorMessage }}</small>
+      :class="customClass"  @input="handleInput" @blur="handleBlur">
+    <small :style="{ visibility: shouldShowError ? 'visible' : 'hidden' }">{{ errorMessage }}</small>
   </div>
 </template>
 
@@ -98,9 +97,6 @@ const handleBlur = (): void => { isErrorPending.value = true }
     padding: 0.75rem 1rem;
     border-radius: 0.375rem;
     margin: 0.25rem 0;
-    border: 1px solid $color-gray-light;
-    background-color: $color-black;
-    color: $color-white;
     outline: none;
   }
 

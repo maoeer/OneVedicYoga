@@ -44,10 +44,10 @@ const formSubmit = () => {
 
     <form @submit.prevent="formSubmit">
       <my-input v-model="formData.email" label="邮箱" type="email" error-message="请输入正确的邮箱" placeholder="请输入邮箱"
-        :validator="validFn.email" @validate="value => validState.email = value" />
+        :validator="validFn.email" @validate="value => validState.email = value" :customClass="['input']"/>
 
       <my-input v-model="formData.password" label="密码" type="password" error-message="密码长度为8-20" placeholder="请输入密码"
-        :validator="validFn.password" @validate="value => validState.password = value" />
+        :validator="validFn.password" @validate="value => validState.password = value" :customClass="['input']"/>
 
       <input type="submit" class="submit-button" :disabled="!(validState.email && validState.password)" />
     </form>
@@ -80,7 +80,13 @@ $color-purple: #A78BFA;
     line-height: 2rem;
     font-size: 1.5rem;
     text-align: center;
-    color: $color-white;
+    color: $color-black;
+  }
+
+   :deep(.input) {
+    border: 1px solid $color-gray-white;
+    background-color: $color-gray-white;
+    color: $color-black;
   }
 
   .submit-button {
@@ -122,7 +128,7 @@ $color-purple: #A78BFA;
   }
 
   a {
-    color: $color-white;
+    // color: $color-gray-white;
   }
 }
 </style>
