@@ -44,10 +44,10 @@ const formSubmit = () => {
 
     <form @submit.prevent="formSubmit">
       <my-input v-model="formData.email" label="邮箱" type="email" error-message="请输入正确的邮箱" placeholder="请输入邮箱"
-        :validator="validFn.email" @validate="value => validState.email = value" :customClass="['input']"/>
+        :validator="validFn.email" @validate="value => validState.email = value"/>
 
       <my-input v-model="formData.password" label="密码" type="password" error-message="密码长度为8-20" placeholder="请输入密码"
-        :validator="validFn.password" @validate="value => validState.password = value" :customClass="['input']"/>
+        :validator="validFn.password" @validate="value => validState.password = value"/>
 
       <input type="submit" class="submit-button" :disabled="!(validState.email && validState.password)" />
     </form>

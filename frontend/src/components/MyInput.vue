@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<{
   minLength?: number
   maxLength?: number
   placeholder?: string
-  customClass?: string[]
   validator?: (value: string) => boolean
 }>(), {
   modelValue: '',
@@ -24,7 +23,6 @@ const props = withDefaults(defineProps<{
   minLength: 8,
   maxLength: 20,
   placeholder: '',
-  customClass: () => []
 })
 
 const emit = defineEmits<{
@@ -74,7 +72,7 @@ const handleBlur = (): void => { isErrorPending.value = true }
   <div class="box-input">
     <label v-if="label">{{ label }}</label>
     <input :value="modelValue" :type="type" :placeholder="placeholder" :maxlength="maxLength" :minlength="minLength"
-      :class="customClass"  @input="handleInput" @blur="handleBlur">
+      @input="handleInput" @blur="handleBlur">
     <small :style="{ visibility: shouldShowError ? 'visible' : 'hidden' }">{{ errorMessage }}</small>
   </div>
 </template>
