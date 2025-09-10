@@ -5,7 +5,7 @@ import MyDotLottie from '@/components/MyDotLottie.vue'
 <template>
   <div>
     Home页面
-    <MyDotLottie 
+    <my-dot-lottie 
       src="/animation/Meditation.lottie"
       width="300px"
       height="300px"

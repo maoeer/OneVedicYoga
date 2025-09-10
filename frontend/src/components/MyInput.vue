@@ -2,6 +2,7 @@
   todo:
   1. 背景颜色和边框颜色
   2. 错误信息使用隐藏不是直接删除
+  3. 倒时60s发送验证按钮
 -->
 
 <script setup lang="ts">
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<{
   minLength?: number
   maxLength?: number
   placeholder?: string
+  showBtn?: boolean
   validator?: (value: string) => boolean
 }>(), {
   modelValue: '',
@@ -23,6 +25,7 @@ const props = withDefaults(defineProps<{
   minLength: 8,
   maxLength: 20,
   placeholder: '',
+  showBtn: false
 })
 
 const emit = defineEmits<{
@@ -66,13 +69,25 @@ const handleInput = (e: Event): void => {
 
 // 失去焦点事件
 const handleBlur = (): void => { isErrorPending.value = true }
+
+// 发送验证码
+const sendCode = (): void => {
+  // todo: 60s倒计时
+  
+  console.log('发送验证码')
+} 
 </script>
 
 <template>
   <div class="box-input">
     <label v-if="label">{{ label }}</label>
-    <input :value="modelValue" :type="type" :placeholder="placeholder" :maxlength="maxLength" :minlength="minLength"
+
+    <div class="input-authCode">
+      <input :class="{ 'authCode': showBtn }" :value="modelValue" :type="type" :placeholder="placeholder" :maxlength="maxLength" :minlength="minLength"
       @input="handleInput" @blur="handleBlur">
+      <button class="authCode-btn" v-if="showBtn" @click="sendCode">发送验证码</button>
+    </div>
+
     <small :style="{ visibility: shouldShowError ? 'visible' : 'hidden' }">{{ errorMessage }}</small>
   </div>
 </template>
@@ -84,6 +99,25 @@ const handleBlur = (): void => { isErrorPending.value = true }
   label,
   small {
     display: block;
+  }
+
+  .input-authCode {
+    display: flex;
+    justify-content: space-between;
+
+    .authCode {
+      width: 70%;
+    }
+
+    .authCode-btn {
+      margin: 0.25rem 0;
+      padding: 0 0.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 0.375rem;
+      outline: none;
+      background-color: $color-white;
+      cursor: pointer;
+    }
   }
 
   input {
