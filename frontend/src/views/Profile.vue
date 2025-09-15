@@ -1,4 +1,4 @@
-<script setup lang="rs">
+<script setup lang="ts">
 </script>
 
 <template>
