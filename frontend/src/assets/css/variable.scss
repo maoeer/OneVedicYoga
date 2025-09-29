@@ -1,12 +1,20 @@
 // 颜色
-$color-white: #f8f8f8;
-$color-black: #333333;
-$color-red: #ef4444;
-$color-blue: #1778f2;
-$color-gray: #f2f2f2;
+// $color-white: #f8f8f8;
+// $color-red: #ef4444;
+// $color-blue: #1778f2;
+// $color-gray: #f2f2f2;
 
-// 圆角
-$radius: 0.5rem;
+// 文字颜色
+$black-1: #333333;
+$white-1: #f5f5f5;
+
+// 按钮普通
+$blue-1: #87d3f6;
+// 按钮悬停
+$blue-2: #5bb6e6;
+
+// 常用圆角
+$radius-1: 0.5rem;
 
 // 内容居中
 .my-flex {

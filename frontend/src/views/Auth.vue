@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import MyLayout from '@/components/MyLayout.vue';
+import MyCountdownButton from '@/components/MyCountdownButton.vue';
 import type { IPageData, IPageTheme } from '@/types/TypeAuth';
 
+// 页面数据
 const pageData = ref<IPageData>({
   email: '',
   code: '',
@@ -46,10 +48,18 @@ watch(pageControl, (newVal => {
     confirmPassword: '',
   }
 }));
+
+// 处理表单提交事件
 const handleConfirm = () => {};
+
+// 处理点击注册/登录链接
 const handleLink = () => { pageControl.value = !pageControl.value };
+
+// 处理发送验证码事件
 const handleSendCode = (e: Event) => {
   e.preventDefault();
+
+  console.log('发送验证码')
 }; 
 </script>
 
@@ -68,7 +78,7 @@ const handleSendCode = (e: Event) => {
       <label for="code">验证码</label>
       <div class="code-container">
         <input v-model="pageData.code" type="text" id="code" required>
-        <button @click="handleSendCode">发送验证码</button>
+        <my-countdown-button @click="handleSendCode"></my-countdown-button>
       </div>
     </section>
 
@@ -92,7 +102,7 @@ const handleSendCode = (e: Event) => {
 <style scoped lang="scss">
 .my-layout{
   section {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.825rem;
 
     label {
       font-size: 0.825rem;
@@ -103,24 +113,18 @@ const handleSendCode = (e: Event) => {
       width: 100%;
       border: 1px solid #ccc;
       padding: 0.5rem;
-      border-radius: 0.5rem;
+      font-size: 1.1rem;
+      border-radius: $radius-1;
     }
 
     .code-container {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
 
       input {
         flex: 1;
-      }
-
-      button {
-        flex: 0 0 auto;
-        border: none;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
       }
     }
 
