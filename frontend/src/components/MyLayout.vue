@@ -66,7 +66,7 @@ const handleLink = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1rem;
+  overflow: hidden;
 }
 
 .container {
@@ -74,9 +74,8 @@ const handleLink = () => {
   justify-content: center;
   align-items: center;  
   gap: 3rem;
-  width: 1000px;
-  max-width: 100%; /* 适配小屏幕 */
-  min-height: 500px; /* 固定最小高度 */
+  width: 100%;
+  max-width: 1000px; /* 适配小屏幕 */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   background-color: #FFFFFF;
   padding: 2rem;
@@ -133,6 +132,20 @@ const handleLink = () => {
       a {
         color: #007bff;  
       }
+    }
+  }
+}
+
+@media (max-width: 1000px)  {
+  .container {
+    height: 100%;
+
+    aside{ 
+      display: none;
+    }
+
+    main {
+      width: 100%;
     }
   }
 }
