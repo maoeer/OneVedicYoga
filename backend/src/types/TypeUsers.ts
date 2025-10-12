@@ -19,7 +19,6 @@ export interface LoginReq extends Request {
 
 // 登录响应类型
 export interface LoginResponse {
-  errMsg?: string;
+  message?: string;
   user?: Omit<User, 'password'>; // 排除密码字段
 }
-

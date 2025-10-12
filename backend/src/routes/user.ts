@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Response } from 'express';
 import { User, LoginReq, LoginResponse } from '../types/TypeUsers';
+import { sendAndStroeCode } from '../config/email';
 import bcrypt from 'bcryptjs';
 import pool from '../config/db';
 
@@ -38,10 +39,45 @@ router.post('/login', async (req: LoginReq, resp: Response<LoginResponse>) => {
       }
     });
   } catch (err) {
-    const errMsg = err instanceof Error ? err.message : '服务器出错';
-    resp.json({ errMsg });
+    const message = err instanceof Error ? err.message : '服务器出错';
+    resp.json({ message });
   }
 });
+
+/**
+ * 注册接口
+ * @param req - 注册请求体，包含用户名、邮箱和密码
+ * @param resp - 注册响应体，包含错误信息或用户信息
+ */
+router.post('/register', async (req, resp) => {
+  // 校验参数
+
+  //
+});
+
+/**
+ * 发送验证码接口
+ * @param req - 发送验证码请求体，包含邮箱
+ * @param resp - 发送验证码响应体，包含错误信息或验证码
+ */
+router.post('/send-code', async (req, resp) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return resp.status(400).json({ message: '邮箱不能为空' });
+  }
+
+  try {
+    const isSuccess = await sendAndStroeCode(email);
+    if (!isSuccess) {
+      return resp.status(500).json({ message: '发送验证码失败' });
+    }
+    return resp.json({ message: '发送验证码成功' });
+  } catch (err) {
+    console.error('发送验证码异常', err);
+    return resp.status(500).json({ message: '服务器错误' });
+  }
+})
 
 /**
  * 校验登录参数

@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import mysql from 'mysql2/promise';
 
-dotenv.config();
+config();
 
 // 数据库配置
 const dbConfig = {
@@ -19,7 +19,7 @@ const pool = mysql.createPool(dbConfig);
 async function testConnection() {
   try {
     const connection = await pool.getConnection();
-    console.log('数据库连接成功');
+    console.log('Mysql数据库连接成功');
     connection.release();
   } catch (err) {
     console.error('数据库连接失败:', err);
