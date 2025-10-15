@@ -43,7 +43,6 @@ async function sendVerificationCode(email: string, code: string): Promise<boolea
     await transporter.sendMail(mailOptions);
     return true;
   } catch (err) {
-    console.error('邮件发送失败:', err);
     return false;
   }
 }
