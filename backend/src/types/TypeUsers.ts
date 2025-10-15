@@ -17,12 +17,6 @@ export interface LoginReq extends Request {
   }
 }
 
-// 登录响应类型
-export interface LoginResponse {
-  message?: string;
-  user?: Omit<User, 'password'>; // 排除密码字段
-}
-
 // 注册请求类型
 export interface RegisterReq extends Request {
   body: {
@@ -33,8 +27,11 @@ export interface RegisterReq extends Request {
   }
 }
 
-// 注册响应类型
-export interface RegisterResponse {
+// 基础响应类型
+export interface LoginResponse {
   message?: string;
-  user?: User;
+  user?: Omit<User, 'password'>; // 排除密码字段
 }
+
+
+
