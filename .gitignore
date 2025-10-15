@@ -72,4 +72,5 @@ pip-wheel-metadata/
 # ---- Git ----
 .git-credentials
 
-
+# other
+startServer.bat

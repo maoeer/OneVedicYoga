@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { Response } from 'express';
 import { User, LoginReq, LoginResponse } from '../types/TypeUsers';
-import { sendAndStroeCode } from '../config/email';
+import { sendAndStoreCode } from '../config/email';
 import bcrypt from 'bcryptjs';
 import pool from '../config/db';
 
@@ -68,7 +68,7 @@ router.post('/send-code', async (req, resp) => {
   }
 
   try {
-    const isSuccess = await sendAndStroeCode(email);
+    const isSuccess = await sendAndStoreCode(email);
     if (!isSuccess) {
       return resp.status(500).json({ message: '发送验证码失败' });
     }

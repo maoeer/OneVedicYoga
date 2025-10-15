@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import redisClient from "./redis-client";
 import { randomInt } from 'crypto';
 import { config } from 'dotenv';
+import { error } from 'console';
 
 config();
 
@@ -58,23 +59,53 @@ function generateCode(): string {
 /**
  * 发送验证码邮件并存储到Redis
  * @param email 接收验证码的邮箱
- * @returns {Promise<boolean>} 是否发送成功
+ * @returns {Promise<{
+ *  isSuccess: boolean, 
+ *  message: string
+ * }>} 是否发送成功
  */
-export async function sendAndStroeCode(email: string): Promise<boolean> {
-  // 生成验证码
-  const code = generateCode();
-
-  // 发送邮件
-  const isSent = await sendVerificationCode(email, code);
-  if (!isSent) {
-    return false;
-  }
-
-  // 存储到Redis
+export async function sendAndStoreCode(email: string): Promise<{
+  isSuccess: boolean,
+  message: string
+}> {
+  // 存储到Redis的key  
   const redisKey = `${REDIS_KEY}${email}`;
-  await redisClient.setEx(redisKey, CODE_EXPIRE, code);
 
-  return true;
+  try {
+    // 生成验证码
+    const code = generateCode();
+
+    // 存储验证码到Redis
+    const setResult = await redisClient.set(redisKey, code, {
+      EX: CODE_EXPIRE, // 过期时间（秒）
+      NX: true         // 仅key不存在时才存储
+    });
+    if (!setResult) {
+      throw new Error('请勿反复获取验证码, 5分钟后尝试');
+    }
+
+    const isSent = await sendVerificationCode(email, code);
+    if (!isSent) {
+      // 邮件发送失败：删除已存储的验证码（允许用户重试）
+      await redisClient.del(redisKey);
+      throw new Error('邮件发送失败, 请检查邮箱是否有效');
+    }
+
+    return {
+      isSuccess: true,
+      message: '发送成功, 验证码5分钟内有效'
+    };
+  } catch (err) {
+    // 异常时删除可能残留的验证码（避免死锁）
+    await redisClient.del(redisKey);
+
+    // 异常时返回错误消息
+    const message = err instanceof Error ? err.message : '服务器出错';
+    return {
+      isSuccess: false,
+      message
+    }
+  }
 }
 
 /**
