@@ -33,6 +33,7 @@ router.post('/login', async (req: LoginReq, resp: ApiResponse) => {
     // 登录成功
     resp.json({
       code: ResponseCode.SUCCESS,
+      message: '登录成功',
       data: {
         user: {
           id: user.id,
@@ -45,7 +46,8 @@ router.post('/login', async (req: LoginReq, resp: ApiResponse) => {
     const message = err instanceof Error ? err.message : '服务器出错';
     resp.json({
       code: ResponseCode.SERVER_ERROR,
-      message
+      message,
+      data: null
     });
   }
 });
@@ -72,7 +74,8 @@ router.post('/send-code', async (req, resp) => {
   if (!email) {
     return resp.json({
       code: ResponseCode.BAD_REQUEST,
-      message: '邮箱不能为空'
+      message: '邮箱不能为空',
+      data: null
     });
   }
 
@@ -81,20 +84,23 @@ router.post('/send-code', async (req, resp) => {
     if (!isSuccess) {
       return resp.json({
         code: ResponseCode.SERVER_ERROR,
-        message: '发送验证码失败'
+        message: '发送验证码失败',
+        data: null
       });
     }
     
     // 发送成功
     resp.json({
       code: ResponseCode.SUCCESS,
-      message: '发送验证码成功'
+      message: '发送验证码成功',
+      data: null
     });
   } catch (err) {
     // 发送失败
     resp.json({
       code: ResponseCode.BAD_REQUEST,
-      message: '服务器错误'
+      message: '服务器错误',
+      data: null
     });
   }
 })
