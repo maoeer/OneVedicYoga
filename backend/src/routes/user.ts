@@ -1,6 +1,6 @@
-import { Router, Request } from 'express';
-import { User, LoginReq } from '../types/typeUsers';
-import { ResponseCode, ApiResponse } from '../types/types.ts';
+import { Router, Request, Response } from 'express';
+import { User, LoginReq } from '../types/typesUsers';
+import { ResponseCode } from '../types/types';
 import { sendAndStoreCode } from '../config/email';
 import bcrypt from 'bcryptjs';
 import pool from '../config/db';
@@ -12,7 +12,7 @@ const router = Router();
  * @param req - 登录请求体，包含邮箱和密码
  * @param resp - 登录响应体，包含错误信息或用户信息
  */
-router.post('/login', async (req: LoginReq, resp: ApiResponse) => {
+router.post('/login', async (req: LoginReq, resp: Response) => {
   try {
     const { email, password } = req.body;
     // 校验邮箱和密码
@@ -25,7 +25,7 @@ router.post('/login', async (req: LoginReq, resp: ApiResponse) => {
     }
 
     // 校验密码
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password!);
     if (!isPasswordValid) {
       throw new Error('邮箱或密码错误');
     }
@@ -57,7 +57,7 @@ router.post('/login', async (req: LoginReq, resp: ApiResponse) => {
  * @param req - 注册请求体，包含用户名、邮箱和密码
  * @param resp - 注册响应体，包含错误信息或用户信息
  */
-router.post('/register', async (req, resp) => {
+router.post('/register', async (req, resp: Response) => {
   // 校验参数
 
   //
@@ -68,7 +68,7 @@ router.post('/register', async (req, resp) => {
  * @param req - 发送验证码请求体，包含邮箱
  * @param resp - 发送验证码响应体，包含错误信息或验证码
  */
-router.post('/send-code', async (req: Request<{}, {}, { email: string }>, resp: ApiResponse) => {
+router.post('/send-code', async (req: Request<{}, {}, { email: string }>, resp: Response) => {
   const { email } = req.body;
 
   if (!email) {
@@ -88,7 +88,7 @@ router.post('/send-code', async (req: Request<{}, {}, { email: string }>, resp: 
         data: null
       });
     }
-    
+
     // 发送成功
     resp.json({
       code: ResponseCode.SUCCESS,
@@ -134,4 +134,4 @@ async function findUserByEmail(email: string): Promise<User | null> {
   return rows.length > 0 ? rows[0] : null;
 }
 
-export default router
+export default router;
