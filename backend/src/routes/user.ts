@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import { Response } from 'express';
-import { User, LoginReq, LoginResponse } from '../types/TypeUsers';
+import { Router, Request } from 'express';
+import { User, LoginReq } from '../types/typeUsers';
+import { ResponseCode, ApiResponse } from '../types/types.ts';
 import { sendAndStoreCode } from '../config/email';
 import bcrypt from 'bcryptjs';
 import pool from '../config/db';
@@ -12,7 +12,7 @@ const router = Router();
  * @param req - 登录请求体，包含邮箱和密码
  * @param resp - 登录响应体，包含错误信息或用户信息
  */
-router.post('/login', async (req: LoginReq, resp: Response<LoginResponse>) => {
+router.post('/login', async (req: LoginReq, resp: ApiResponse) => {
   try {
     const { email, password } = req.body;
     // 校验邮箱和密码
@@ -32,15 +32,23 @@ router.post('/login', async (req: LoginReq, resp: Response<LoginResponse>) => {
 
     // 登录成功
     resp.json({
-      user: {
-        id: user.id,
-        username: user.username || '用户',
-        email: user.email,
+      code: ResponseCode.SUCCESS,
+      message: '登录成功',
+      data: {
+        user: {
+          id: user.id,
+          username: user.username || '用户',
+          email: user.email,
+        }
       }
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : '服务器出错';
-    resp.json({ message });
+    resp.json({
+      code: ResponseCode.SERVER_ERROR,
+      message,
+      data: null
+    });
   }
 });
 
@@ -60,22 +68,40 @@ router.post('/register', async (req, resp) => {
  * @param req - 发送验证码请求体，包含邮箱
  * @param resp - 发送验证码响应体，包含错误信息或验证码
  */
-router.post('/send-code', async (req, resp) => {
+router.post('/send-code', async (req: Request<{}, {}, { email: string }>, resp: ApiResponse) => {
   const { email } = req.body;
 
   if (!email) {
-    return resp.status(400).json({ message: '邮箱不能为空' });
+    return resp.json({
+      code: ResponseCode.BAD_REQUEST,
+      message: '邮箱不能为空',
+      data: null
+    });
   }
 
   try {
     const isSuccess = await sendAndStoreCode(email);
     if (!isSuccess) {
-      return resp.status(500).json({ message: '发送验证码失败' });
+      return resp.json({
+        code: ResponseCode.SERVER_ERROR,
+        message: '发送验证码失败',
+        data: null
+      });
     }
-    return resp.json({ message: '发送验证码成功' });
+    
+    // 发送成功
+    resp.json({
+      code: ResponseCode.SUCCESS,
+      message: '发送验证码成功',
+      data: null
+    });
   } catch (err) {
-    console.error('发送验证码异常', err);
-    return resp.status(500).json({ message: '服务器错误' });
+    // 发送失败
+    resp.json({
+      code: ResponseCode.BAD_REQUEST,
+      message: '服务器错误',
+      data: null
+    });
   }
 })
 
