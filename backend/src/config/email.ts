@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer';
 import redisClient from "./redis-client";
 import { randomInt } from 'crypto';
 import { config } from 'dotenv';
-import { error } from 'console';
 
 config();
 

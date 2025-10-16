@@ -26,12 +26,3 @@ export interface RegisterReq extends Request {
     confirmPassword: string;
   }
 }
-
-// 基础响应类型
-export interface LoginResponse {
-  message?: string;
-  user?: Omit<User, 'password'>; // 排除密码字段
-}
-
-
-

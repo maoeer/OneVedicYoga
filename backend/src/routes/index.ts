@@ -1,9 +1,9 @@
-import { Router } from 'express'
-import userRouter from './user'
+import { Router } from 'express';
+import userRouter from './user';
 
-const apiRouter = Router()
+const apiRouter = Router();
 
 // 业务路由聚合：/api/user
-apiRouter.use('/user', userRouter)
+apiRouter.use('/user', userRouter);
 
-export default apiRouter
+export default apiRouter;
