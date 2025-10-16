@@ -1,3 +1,5 @@
+import { Response } from 'express';
+
 // 定义状态码枚举
 export enum ResponseCode {
   SUCCESS = 200, // 成功
@@ -6,7 +8,7 @@ export enum ResponseCode {
 }
 
 // 基础响应类型
-export interface ApiResponse<T = unknown> {
+export interface ApiResponse<T = unknown> extends Response {
   code?: ResponseCode;
   message?: string;
   data?: T;
