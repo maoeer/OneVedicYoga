@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request } from 'express';
 import { User, LoginReq } from '../types/typeUsers';
 import { ResponseCode, ApiResponse } from '../types/types.ts';
 import { sendAndStoreCode } from '../config/email';
@@ -68,7 +68,7 @@ router.post('/register', async (req, resp) => {
  * @param req - 发送验证码请求体，包含邮箱
  * @param resp - 发送验证码响应体，包含错误信息或验证码
  */
-router.post('/send-code', async (req, resp) => {
+router.post('/send-code', async (req: Request<{}, {}, { email: string }>, resp: ApiResponse) => {
   const { email } = req.body;
 
   if (!email) {
